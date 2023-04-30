@@ -1,7 +1,8 @@
 | Instruction | Parameters | Usage |
 | --- | --- | --- |
 | `mov` | `destination, source` | Move data from the source to the destination |
-| Example: `mov eax, 0x1` sets the value of the `eax` register to `0x1`. |
+| MOV RAX, 0x1234 ; Move hex value to RAX register |
+| MOV RBX, RAX ; Move value in RAX to RBX register |
 | `add` | `destination, source` | Add the source to the destination |
 | Example: `add eax, ebx` adds the value of the `ebx` register to the value of the `eax` register. |
 | `sub` | `destination, source` | Subtract the source from the destination |
