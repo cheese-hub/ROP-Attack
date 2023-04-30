@@ -16,7 +16,9 @@ Here are some example use cases for pwntools:
 - Developing a remote exploit to exploit a network service running on a target machine.
 - Building a payload to inject shellcode into a vulnerable program.
 - Using ROP to bypass address space layout randomization (ASLR) and execute arbitrary code.
-Example code 1
+
+{Example code 1}
+
 ~~~
 from pwn import *
 
@@ -40,7 +42,8 @@ output = p.recvall().decode('utf-8')
 print(output)
 
 ~~~
-Example code 2
+
+{Example code 2}
 ~~~
 from pwn import *
 
