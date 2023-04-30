@@ -4,7 +4,9 @@
 | MOV RAX, 0x1234 ; Move hex value to RAX register |
 | MOV RBX, RAX ; Move value in RAX to RBX register |
 | `add` | `destination, source` | Add the source to the destination |
-| Example: `add eax, ebx` adds the value of the `ebx` register to the value of the `eax` register. |
+| Example: MOV RAX, 0x10 ; Move hex value to RAX register
+ADD RAX, 0x20 ; Add hex value to RAX register
+|
 | `sub` | `destination, source` | Subtract the source from the destination |
 | Example: `sub eax, ebx` subtracts the value of the `ebx` register from the value of the `eax` register. |
 | `cmp` | `operand1, operand2` | Compare the two operands and set the appropriate flags |
