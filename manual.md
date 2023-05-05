@@ -22,6 +22,7 @@ keypoints:
 
 - ROP attacks can be difficult to defend against, as they don't rely on injecting code into the program's memory like traditional attacks do. Instead, they rely on using the program's own code against itself.
 
+
 ### Demonstration
 
 The demonstration on CHEESEHub illustrates the ROP attack using one machines; 
@@ -63,6 +64,8 @@ next to the container's name.
 
 ## Analyze the ELF File
 Here is the figure of r2 -AAAA split
+![image](https://user-images.githubusercontent.com/77866826/236359081-8598cb0f-7cbf-4f48-88f9-13d4d418f775.png)
+
 # Figure of results using li
 Check the program's protections and find that NX is enabled.
 
@@ -93,7 +96,7 @@ Now we try to make an overflow and return to the address of system function afte
 
 
 
-代码生成与分析
+
 
 
 ## Catch the Flag!!
