@@ -124,9 +124,7 @@ p.interactive()
 
 > ## ROP Split Attack
 > 
-> In this lesson, the hacker is able to strip the SSL via ARP poisoning the victim. Once the ARP Poisoning is initiated, the hacker is
-> able to intercept the traffic from the victim to the server, acting as the server and possibly collecting confidential information from the victim. 
-{: .callout}
+> We can use DEP as the countermeasure. Data Execution Prevention (DEP): DEP is a security feature that prevents the execution of code from memory pages that are marked as data. This can help prevent attackers from executing malicious code in the first place.
 
 {% include links.md %}
 
