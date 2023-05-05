@@ -57,31 +57,40 @@ Next, click the *View* link to go to the application-specific page and start the
 
 Once all the containers have started, launch each container's web interface in a separate browser tab by clicking the icon 
 next to the container's name.
-## let's get start it
+## Let's get start it
 
 
 
 ## Analyze the ELF File
 Here is the figure of r2 -AAAA split
-# figure of li
+# figure of results using li
 Check the program's protections and find that NX is enabled.
 
 ## Find the vulnerabilities
 使用afl列出涉及的函数：
+using afl to list all the functions involved
+
 After analyzing with r2, the main, pwnme, and usefulFunction functions were discovered.
 3 figures of find functions
+
+We can see in the pwnme function that there is a buffer with the size 32 bytes but fgets allow 
 我们可以看到它调用将执行/bin/ls的system()函数
+We can see that the usefulFunction is gonna to call system function with string '/bin/ls' as its parameter
+After we run the program, we can see that '/bin/ls' is used.
+But our goal is to use  '/bin/cat flag.txt' as its parameter so that we can print the flag. So keep searching the gadgets we want.
 
-可以看到成功执行了/bin/ls。
-不过我们的目标是打印flag，而不是ls，所以继续研究下去。
+
+
 回到r2中使用izz列出字符串：
-
+Let's get back to r2 and use izz to list the string inside the ELF File.
 我们在其中看到了：
+We can see that there is a string that can print the flag:/bin/cat flag.txt
 
-可以打印flag的字符串。
 这个字符串的地址是0x0001060。
+And the address of this string is 0x0001060.
 现在我们尝试溢出栈，直接执行到system()。
-溢出，返回地址为system，参数为/bin/cat flag.txt
+## The idea came out!
+Now we try to make an overflow and return to the address of system function after that and try to exec the system function with the parameter /bin/cat flag.txt
 从上图可以看到有一个32字节的缓冲区，可以通过fgets接收96字节的输入从而溢出，也是和上一题ret2win一样溢出rip吗？
 这里就用那个manual直接操作，然后得出40个字节
 
