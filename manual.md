@@ -66,17 +66,39 @@ next to the container's name.
 Here is the figure of r2 -AAAA split
 ![image](https://user-images.githubusercontent.com/77866826/236359081-8598cb0f-7cbf-4f48-88f9-13d4d418f775.png)
 
-# Figure of results using li
+![image](https://user-images.githubusercontent.com/77866826/236639440-7c8506b2-1c5e-4a64-9f3a-6a24a7a32ca5.png)
 Check the program's protections and find that NX is enabled.
 
 ## Find the vulnerabilities
 using afl to list all the functions involved
+![image](https://user-images.githubusercontent.com/77866826/236639496-5dfd204f-2e61-4b17-9268-729301bd083b.png)
 
 After analyzing with r2, the main, pwnme, and usefulFunction functions were discovered.
-3 figures of find functions
 
-We can see in the pwnme function that there is a buffer with the size of 40 bytes but fgets allow to unput 96 bytes
+![image](https://user-images.githubusercontent.com/77866826/236639532-2ac5cb20-5cac-4feb-b1d7-d53b9011bcf4.png)
+
+
+3 figures of find functions
+![image](https://user-images.githubusercontent.com/77866826/236639632-f297cf2f-d445-48f2-879e-0d8fd0bac1cb.png)
+
+![image](https://user-images.githubusercontent.com/77866826/236639683-910e5cdc-e398-46dc-8965-84252d37e55d.png)
+
+We can see in the pwnme function that there is a buffer with the size of 32 bytes but fgets allow to unput 96 bytes
 So an overflow will happen and we can use as the start of the payload.
+## Find the bytes needed to make an overflow
+First we use gdb to analyse
+![image](https://user-images.githubusercontent.com/77866826/236639994-7464498b-9e4d-41dd-934f-cd8d79f9c1c3.png)
+And then we generate a random 100 bytes string as input
+![image](https://user-images.githubusercontent.com/77866826/236640121-3db8cc3e-4a03-42bd-83a4-61fce5f4bb84.png)
+![image](https://user-images.githubusercontent.com/77866826/236640208-bfcb716f-9e54-4283-a469-91a4f6a2d826.png)
+
+And then we do pattern-search
+![image](https://user-images.githubusercontent.com/77866826/236640243-48ba12fe-dcb0-493b-a5a2-1320aad20cc9.png)
+
+We can tell in order to overflowrsp we need 40 bytes
+
+## Back to usefulFunction to keep using r2.
+![image](https://user-images.githubusercontent.com/77866826/236640293-c1c893e6-93a1-431f-9128-7613b5be80e1.png)
 
 We can see that the usefulFunction is gonna to call system function with string '/bin/ls' as its parameter
 After we run the program, we can see that '/bin/ls' is used.
@@ -84,7 +106,9 @@ But our goal is to use  '/bin/cat flag.txt' as its parameter so that we can prin
 
 
 
-Let's get back to r2 and use izz to list the string inside the ELF File.
+## Let's get back to r2 and use izz to list the string inside the ELF File.
+![image](https://user-images.githubusercontent.com/77866826/236640330-8114d260-e81e-4237-a786-336c098c549d.png)
+![image](https://user-images.githubusercontent.com/77866826/236640342-c90de3aa-5feb-4997-84b2-bde8b9276137.png)
 
 We can see that there is a string that can print the flag:/bin/cat flag.txt
 
@@ -92,9 +116,11 @@ We can see that there is a string that can print the flag:/bin/cat flag.txt
 And the address of this string is 0x0001060.
 
 ## The idea came out!
-Now we try to make an overflow and return to the address of system function after that and try to exec the system function with the parameter /bin/cat flag.txt
-
-
+Now we try to make an overflow and return to the address of system function after that and try to exec the system function with the parameter /bin/cat flag.txt. 
+In order to do that,we need to pass the address of the string to RDI Register. We need ROPgadget to help us implement this because it can find related string in the file
+![image](https://user-images.githubusercontent.com/77866826/236640364-d56ae265-a276-4263-acee-92b72fae5cab.png)
+![image](https://user-images.githubusercontent.com/77866826/236640501-3212fd1c-7e32-418c-b21d-15bb39fac710.png)
+We can use" pop rdi : ret "to do make it as a gadget.
 ## Build and Analyze the code
 from pwn import *
 
