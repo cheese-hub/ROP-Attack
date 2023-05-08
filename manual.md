@@ -58,8 +58,11 @@ Next, click the *View* link to go to the application-specific page and start the
 
 Once all the containers have started, launch each container's web interface in a separate browser tab by clicking the icon 
 next to the container's name.
-## Let's get start it
-
+## Let's get start it by building the image and running the docker container
+Enter the directory and 
+~~~
+$docker run -it split bash
+~~~
 
 
 ## Analyze the ELF File
