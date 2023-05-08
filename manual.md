@@ -115,12 +115,12 @@ But our goal is to use  '/bin/cat flag.txt' as its parameter so that we can prin
 
 We can see that there is a string that can print the flag:/bin/cat flag.txt
 
-
 And the address of this string is 0x0001060.
 
 ## The idea came out!
 Now we try to make an overflow and return to the address of system function after that and try to exec the system function with the parameter /bin/cat flag.txt. 
-In order to do that,we need to pass the address of the string to RDI Register. We need ROPgadget to help us implement this because it can find related string in the file
+In order to do that,we need to pass the address of the string to RDI Register. 
+We need ROPgadget to help us implement this because it can find related string in the file
 !![image](https://user-images.githubusercontent.com/77866826/236640670-2d82c1f2-87ff-4c52-9c49-3f3b35b3a4cf.png)
 ![image](https://user-images.githubusercontent.com/77866826/236640501-3212fd1c-7e32-418c-b21d-15bb39fac710.png)
 We can use" pop rdi : ret "to do make it as a gadget.
@@ -158,5 +158,4 @@ p.interactive()
 > 
 > We can use DEP as the countermeasure. Data Execution Prevention (DEP): DEP is a security feature that prevents the execution of code from memory pages that are marked as data. This can help prevent attackers from executing malicious code in the first place.
 
-{% include links.md %}
 
