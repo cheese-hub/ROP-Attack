@@ -71,8 +71,11 @@ Here is the figure of r2 -AAAA split
 ![image](https://user-images.githubusercontent.com/77866826/236359081-8598cb0f-7cbf-4f48-88f9-13d4d418f775.png)
 
 
-
+~~~
+iI
+~~~
 ![1687247067908](https://github.com/cheese-hub/ROP-Attack/assets/77866826/f586264d-8424-4e85-a233-11704cd9b784)
+
 Check the program's protections and find that NX is enabled.
 
 ## Find the vulnerabilities
