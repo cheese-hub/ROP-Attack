@@ -40,21 +40,19 @@ The demonstration on CHEESEHub illustrates the ROP attack using one machines;
 > You will need to create an account on [CHEESEHub](https://www.hub.cheesehub.org) to work through this exercise.
 > Each container in this demonstration has a web interface and is accessible through your web browser, no other special software 
 > is needed.
-{: .callout} 
 
-We will start by first adding the SSLStrip application:
+We will start by first adding the ROP-Attack application:
 
-![Add SSLStrip]({{ page.root }}/fig/sslstrip/add-sslstrip.png)
+figure to be shown
 
 Next, click the *View* link to go to the application-specific page and start the application containers:
 
-![Start Containers]({{ page.root }}/fig/sslstrip/start-containers.png)
-
+figure to be shown
 > ## Container Launch Errors
 >
 > If a container fails to start, you will see a flashing warning icon next to the container's name. Take a look at the logs to 
 > determine the cause of failure and try deleting the application and restarting.
-{: .callout}
+
 
 Once all the containers have started, launch each container's web interface in a separate browser tab by clicking the icon 
 next to the container's name.
@@ -66,10 +64,15 @@ $docker run -it split bash
 
 
 ## Analyze the ELF File
+~~~
+r2 -AAAA split
+~~~
 Here is the figure of r2 -AAAA split
 ![image](https://user-images.githubusercontent.com/77866826/236359081-8598cb0f-7cbf-4f48-88f9-13d4d418f775.png)
 
-![image](https://user-images.githubusercontent.com/77866826/236639440-7c8506b2-1c5e-4a64-9f3a-6a24a7a32ca5.png)
+
+
+![1687247067908](https://github.com/cheese-hub/ROP-Attack/assets/77866826/f586264d-8424-4e85-a233-11704cd9b784)
 Check the program's protections and find that NX is enabled.
 
 ## Find the vulnerabilities
